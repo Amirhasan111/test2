@@ -1,0 +1,365 @@
+﻿<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#2c3e50">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>برنامه تمرین سرشانه</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Vazirmatn', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #2c3e50, #4ca1af);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 15px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        
+        .subtitle {
+            color: #4ca1af;
+            font-size: 1rem;
+        }
+        
+        .workout-plan {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .exercise {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .exercise:active {
+            transform: scale(0.98);
+        }
+        
+        .exercise-header {
+            background: #2c3e50;
+            color: white;
+            padding: 12px;
+            text-align: center;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .exercise-header i {
+            margin-left: 8px;
+        }
+        
+        .exercise-content {
+            padding: 15px;
+        }
+        
+        .exercise-details {
+            margin-bottom: 12px;
+        }
+        
+        .exercise-details p {
+            margin: 6px 0;
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+        
+        .exercise-details i {
+            margin-left: 8px;
+            color: #4ca1af;
+            font-weight: bold;
+            min-width: 80px;
+        }
+        
+        .youtube-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #ff0000;
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            margin-top: 12px;
+            transition: background 0.3s ease;
+        }
+        
+        .youtube-link i {
+            margin-left: 5px;
+        }
+        
+        .youtube-link:active {
+            background: #cc0000;
+        }
+        
+        .tips {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 25px;
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tips h2 {
+            color: #2c3e50;
+            margin-bottom: 12px;
+            text-align: center;
+            font-size: 1.3rem;
+        }
+        
+        .tips ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .tips li {
+            padding: 8px;
+            margin-bottom: 8px;
+            background: rgba(44, 62, 80, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+        
+        .tips li::before {
+            content: "•";
+            color: #4ca1af;
+            font-weight: bold;
+            margin-left: 8px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: white;
+            padding: 15px;
+            font-size: 0.8rem;
+        }
+        
+        .install-btn {
+            display: block;
+            width: 100%;
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+        
+        .nav-btn {
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: bold;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-btn.active {
+            background: #2c3e50;
+            color: white;
+        }
+        
+        @media (min-width: 768px) {
+            .workout-plan {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-dumbbell"></i> برنامه تمرین سرشانه حرفه‌ای</h1>
+            <p class="subtitle">بهترین تمرینات برای ساخت سرشانه‌ای پهن و قوی</p>
+        </header>
+        
+        <div class="nav">
+            <a href="#" class="nav-btn active">سرشانه</a>
+            <a href="#" class="nav-btn">سینه</a>
+            <a href="#" class="nav-btn">پشت</a>
+        </div>
+        
+        <div class="workout-plan">
+            <div class="exercise">
+                <div class="exercise-header"><i class="fas fa-angle-double-up"></i> پرس سرشانه هالتر</div>
+                <div class="exercise-content">
+                    <div class="exercise-details">
+                        <p><i>تعداد ست‌ها:</i> 4 ست</p>
+                        <p><i>تعداد تکرار:</i> 8-10</p>
+                        <p><i>استراحت:</i> 90 ثانیه</p>
+                        <p>تمرین پایه برای حجم‌گیری و قدرت سرشانه</p>
+                    </div>
+                    <a href="https://www.youtube.com/results?search_query=overhead+press" target="_blank" class="youtube-link"><i class="fab fa-youtube"></i> آموزش در یوتیوب</a>
+                </div>
+            </div>
+            
+            <div class="exercise">
+                <div class="exercise-header"><i class="fas fa-dumbbell"></i> پرس سرشانه دمبل</div>
+                <div class="exercise-content">
+                    <div class="exercise-details">
+                        <p><i>تعداد ست‌ها:</i> 4 ست</p>
+                        <p><i>تعداد تکرار:</i> 10-12</p>
+                        <p><i>استراحت:</i> 75 ثانیه</p>
+                        <p>دامنه حرکتی بیشتر و درگیری بهتر عضلات</p>
+                    </div>
+                    <a href="https://www.youtube.com/results?search_query=dumbbell+shoulder+press" target="_blank" class="youtube-link"><i class="fab fa-youtube"></i> آموزش در یوتیوب</a>
+                </div>
+            </div>
+            
+            <div class="exercise">
+                <div class="exercise-header"><i class="fas fa-arrows-alt-h"></i> نشر از جانب</div>
+                <div class="exercise-content">
+                    <div class="exercise-details">
+                        <p><i>تعداد ست‌ها:</i> 3 ست</p>
+                        <p><i>تعداد تکرار:</i> 12-15</p>
+                        <p><i>استراحت:</i> 60 ثانیه</p>
+                        <p>هدفگیری بخش میانی سرشانه برای پهن‌تر شدن</p>
+                    </div>
+                    <a href="https://www.youtube.com/results?search_query=lateral+raise" target="_blank" class="youtube-link"><i class="fab fa-youtube"></i> آموزش در یوتیوب</a>
+                </div>
+            </div>
+            
+            <div class="exercise">
+                <div class="exercise-header"><i class="fas fa-arrows-alt-v"></i> نشر از جلو</div>
+                <div class="exercise-content">
+                    <div class="exercise-details">
+                        <p><i>تعداد ست‌ها:</i> 3 ست</p>
+                        <p><i>تعداد تکرار:</i> 12-15</p>
+                        <p><i>استراحت:</i> 60 ثانیه</p>
+                        <p>هدفگیری بخش جلویی سرشانه</p>
+                    </div>
+                    <a href="https://www.youtube.com/results?search_query=front+raise" target="_blank" class="youtube-link"><i class="fab fa-youtube"></i> آموزش در یوتیوب</a>
+                </div>
+            </div>
+            
+            <div class="exercise">
+                <div class="exercise-header"><i class="fas fa-angle-double-down"></i> کول با هالتر</div>
+                <div class="exercise-content">
+                    <div class="exercise-details">
+                        <p><i>تعداد ست‌ها:</i> 4 ست</p>
+                        <p><i>تعداد تکرار:</i> 10-12</p>
+                        <p><i>استراحت:</i> 75 ثانیه</p>
+                        <p>تقویت بخش میانی سرشانه و traps</p>
+                    </div>
+                    <a href="https://www.youtube.com/results?search_query=barbell+shrug" target="_blank" class="youtube-link"><i class="fab fa-youtube"></i> آموزش در یوتیوب</a>
+                </div>
+            </div>
+            
+            <div class="exercise">
+                <div class="exercise-header"><i class="fas fa-redo"></i> نشر خم دمبل</div>
+                <div class="exercise-content">
+                    <div class="exercise-details">
+                        <p><i>تعداد ست‌ها:</i> 3 ست</p>
+                        <p><i>تعداد تکرار:</i> 12-15</p>
+                        <p><i>استراحت:</i> 60 ثانیه</p>
+                        <p>هدفگیری بخش پشتی سرشانه</p>
+                    </div>
+                    <a href="https://www.youtube.com/results?search_query=rear+delt+raise" target="_blank" class="youtube-link"><i class="fab fa-youtube"></i> آموزش در یوتیوب</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tips">
+            <h2><i class="fas fa-lightbulb"></i> نکات مهم برای تمرین سرشانه</h2>
+            <ul>
+                <li>فرم صحیح اجرای حرکات را رعایت کنید تا از آسیب جلوگیری شود</li>
+                <li>به گرم کردن کتف و Rotator Cuff توجه ویژه‌ای داشته باشید</li>
+                <li>هنگام پرس سرشانه، کمر خود را قوس ندهید</li>
+                <li>برای نشر از جانب، وزنه‌های سبک‌تر با تکرارهای بیشتر انتخاب کنید</li>
+                <li>بین تمرینات سرشانه حداقل 48 ساعت استراحت دهید</li>
+                <li>حتما قبل از تمرین، حرکات کششی و گرم کردن انجام دهید</li>
+            </ul>
+        </div>
+        
+        <a href="#" class="install-btn" onclick="alert('برای نصب، در مرورگر خود گزینه Add to Home Screen را انتخاب کنید')"><i class="fas fa-download"></i> نصب برنامه</a>
+        
+        <footer>
+            <p>© 2023 برنامه تمرین سرشانه - تمرینات خود را با تغذیه مناسب تکمیل کنید</p>
+        </footer>
+    </div>
+
+    <script>
+        // ثبت سرویس ورکر برای قابلیت آفلاین
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js').then(function(registration) {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, function(err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+        
+        // جلوگیری از اسکرول زوم روی دبل تاچ
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function (event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+        
+        // تغییر فعال بودن دکمه‌های ناوبری
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
